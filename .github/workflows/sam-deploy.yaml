@@ -50,7 +50,6 @@ jobs:
       - name: Deploy to AWS (dev/prod)
         run: |
           sam deploy \
-            --stack-name s3-event-notification-${{ steps.branch_env.outputs.env }} \
             --no-fail-on-empty-changeset \
             --parameter-overrides Environment=${{ steps.branch_env.outputs.env }} EmailSubscriptionParam=${{ secrets.NOTIFICATION_EMAIL }} \
             --config-env ${{ steps.branch_env.outputs.env }}
