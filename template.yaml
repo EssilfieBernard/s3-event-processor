@@ -47,6 +47,7 @@ Resources:
         Variables:
           SNS_TOPIC_ARN: !Ref NotificationTopic
           ENVIRONMENT: !Ref Environment
+          EMAIL: !Ref EmailSubscriptionParam
       Policies:
         - SNSPublishMessagePolicy:
             TopicName: !GetAtt NotificationTopic.TopicName

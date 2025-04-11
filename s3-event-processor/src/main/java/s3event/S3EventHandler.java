@@ -11,6 +11,7 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
     private final SnsClient snsClient = SnsClient.create();
     private final String topicArn = System.getenv("SNS_TOPIC_ARN");
     private final String environment = System.getenv("ENVIRONMENT");
+    private final String email = System.getenv("EMAIL");
 
     @Override
     public String handleRequest(S3Event s3Event, Context context) {
@@ -33,6 +34,7 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
                             File: %s
                             Size: %s bytes
                             Upload Time: %s
+                           
                             """,
                     env, bucket, key, objectSize, eventTime
             );
@@ -45,6 +47,7 @@ public class S3EventHandler implements RequestHandler<S3Event, String> {
             );
 
             context.getLogger().log("SNS notification sent with message ID: " + response.messageId());
+            context.getLogger().log("Subscribed email: " + email );
             return "S3 event processed successfully";
         } catch (Exception e) {
             context.getLogger().log("Error processing S3 event: " + e.getMessage());
